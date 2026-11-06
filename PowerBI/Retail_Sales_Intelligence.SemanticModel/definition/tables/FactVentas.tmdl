@@ -1,0 +1,359 @@
+table FactVentas
+	lineageTag: 08d545da-4f6d-4f32-8bc6-2b59829b65a4
+
+	measure 'Ventas Netas' = [Ventas Netas Corregidas]
+		formatString: \$#,0;\$-#,0;\$#,0
+		lineageTag: 18f385dd-be2f-431c-b797-c347a2cdde0d
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-CL"}
+
+	measure 'Utilidad Bruta' =
+			
+			[Ventas Netas Corregidas] - [Costo Total]
+		formatString: \$#,0;\$-#,0;\$#,0
+		lineageTag: 6560e33c-cd73-43f7-b021-17191478686b
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-CL"}
+
+	measure 'Costo Total' =
+			
+			CALCULATE(
+			    SUMX(
+			        FactVentas,
+			        FactVentas[Cantidad] *
+			        RELATED(DimProducto[CostoUnitarioCLP])
+			    ),
+			    FactVentas[Estado] = "confirmada"
+			)
+		formatString: \$#,0;\$-#,0;\$#,0
+		lineageTag: 95c0f9b9-c2c1-43ce-92db-fe3afd65612b
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-CL"}
+
+	measure 'Margen Bruto %' =
+			
+			DIVIDE(
+			    [Utilidad Bruta],
+			    [Ventas Netas Corregidas],
+			    0
+			)
+		formatString: 0.00 %;-0.00 %;0.00 %
+		lineageTag: 5716471a-181c-4e57-90a3-d4484d2fcd6f
+
+	measure 'Ventas Promedio por linea' = DIVIDE([Ventas Netas Corregidas], CALCULATE(COUNTROWS(FactVentas), FactVentas[Estado] = "Confirmada"), 0)
+		formatString: \$#,0;\$-#,0;\$#,0
+		lineageTag: 813d679c-7f65-4aa6-ba41-fca540e2c33d
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-CL"}
+
+	measure 'Unidades Netas' =
+			
+			CALCULATE(
+			    SUM(FactVentas[Cantidad]),
+			    FactVentas[Estado] = "confirmada"
+			)
+		formatString: #,0
+		lineageTag: 8f3f21a9-6108-444d-b68c-80d4c04f5665
+
+	measure 'Ventas Anuladas' = CALCULATE(SUMX(FactVentas,FactVentas[Cantidad] * FactVentas[PrecioUnitarioCLP]),FactVentas[Estado] = "Anulada")
+		formatString: \$#,0;\$-#,0;\$#,0
+		lineageTag: a33afcb9-5261-4bd7-84ca-6ad52529a68f
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-CL"}
+
+	measure 'Cantidad Devoluciones' = CALCULATE(COUNTROWS(FactVentas),FactVentas[EsDevolucion] = TRUE(), FactVentas[Estado] <> "Anulada")
+		formatString: 0
+		lineageTag: 6fb60d92-5c96-4fb8-8d5a-f220dd531798
+
+	measure 'Diagnostico Ventas Base' =
+			
+			SUMX(
+			    FactVentas,
+			    FactVentas[Cantidad] * FactVentas[PrecioUnitarioCLP]
+			)
+		formatString: \$#,0;\$-#,0;\$#,0
+		lineageTag: 18f8fdc9-5885-49e4-8e20-e8610326812a
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-CL"}
+
+	measure 'Diagnostico Filas Validas' =
+			
+			CALCULATE(
+			    COUNTROWS(FactVentas),
+			    FactVentas[Estado] <> "Anulada"
+			)
+		formatString: 0
+		lineageTag: f133cd62-fee6-4503-9494-8ec3d231aec8
+
+	measure 'Diagnostico Estados' =
+			
+			CONCATENATEX(
+			    VALUES(FactVentas[Estado]),
+			    FactVentas[Estado],
+			    " | "
+			)
+		lineageTag: ddce5f2a-3e87-45e8-b542-74d3f829ee5f
+
+	measure 'Ventas Netas Corregidas' =
+			CALCULATE(
+			    SUMX(FactVentas, FactVentas[Cantidad] * FactVentas[PrecioUnitarioCLP] * (1 - FactVentas[DescuentoPct])),
+			    FactVentas[Estado] = "Confirmada"
+			)
+		formatString: \$#,0;\$-#,0;\$#,0
+		lineageTag: 137e2903-0901-42cd-a423-11a09e786f01
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-CL"}
+
+	measure 'Participacion Ventas %' = DIVIDE(FactVentas[Ventas Netas Corregidas],CALCULATE([Ventas Netas Corregidas],REMOVEFILTERS(DimProducto)),0)
+		formatString: 0.00 %;-0.00 %;0.00 %
+		lineageTag: c399426a-62ae-482b-a99f-75035d809d4e
+
+	measure 'Ranking Producto' =
+			
+			RANKX(
+			    ALLSELECTED(DimProducto[Producto]),
+			    [Ventas Netas Corregidas],
+			    ,
+			    DESC,
+			    DENSE
+			)
+		formatString: 0
+		lineageTag: a349d3c2-4fa0-4ad6-bdc4-f5bcd41b15d8
+
+	measure 'Margen Producto %' = DIVIDE([Utilidad Bruta],[Ventas Netas Corregidas],0)
+		formatString: 0.00 %;-0.00 %;0.00 %
+		lineageTag: 83855933-5c4e-47c6-b4b9-a22af53648e9
+
+	measure 'Clasificacion Margen' =
+			
+			SWITCH(
+			    TRUE(),
+			    ISBLANK([Ventas Netas Corregidas]), "Sin ventas",
+			    [Ventas Netas Corregidas] <= 0, "Revisar ventas",
+			    [Margen Producto %] < 0, "Margen negativo",
+			    [Margen Producto %] < 0.20, "Margen bajo",
+			    [Margen Producto %] < 0.30, "Margen medio",
+			    "Margen alto"
+			)
+		lineageTag: 0d4de00d-112f-4319-8a50-76d921b88f6a
+
+	measure 'Clientes Activos' =
+			
+			COUNTROWS(
+			    FILTER(
+			        VALUES(DimCliente[IDCliente]),
+			        [Ventas Netas Corregidas] > 0
+			    )
+			)
+		formatString: 0
+		lineageTag: 0ae5a86a-0c99-4de3-83d2-a31c50f9bd2a
+
+	measure 'Venta Promedio por Cliente' =
+			
+			DIVIDE(
+			    [Ventas Netas Corregidas],
+			    [Clientes Activos],
+			    0
+			)
+		formatString: \$#,0;\$-#,0;\$#,0
+		lineageTag: 54dfe969-4848-48c9-bda4-510afca50770
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-CL"}
+
+	measure 'Ranking Cliente' =
+			
+			RANKX(
+			    ALLSELECTED(DimCliente[Cliente]),
+			    [Ventas Netas Corregidas],
+			    ,
+			    DESC,
+			    DENSE
+			)
+		formatString: 0
+		lineageTag: d5b4cf59-31e6-4864-a44d-8b0341c3b112
+
+	measure 'Participacion Cliente %' =
+			
+			DIVIDE(
+			    [Ventas Netas Corregidas],
+			    CALCULATE(
+			        [Ventas Netas Corregidas],
+			        REMOVEFILTERS(DimCliente)
+			    ),
+			    0
+			)
+		formatString: 0.00 %;-0.00 %;0.00 %
+		lineageTag: 3393c205-20ca-4668-87b2-b6c16945b77c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":false}
+
+	measure 'Margen Vendedor %' =
+			
+			DIVIDE(
+			    [Utilidad Bruta],
+			    [Ventas Netas Corregidas],
+			    0
+			)
+		formatString: 0.00 %;-0.00 %;0.00 %
+		lineageTag: 1c550d09-87d8-4397-8514-ef9dd141ad01
+
+		annotation PBI_FormatHint = {"isGeneralNumber":false}
+
+	measure 'Ranking Vendedor' =
+			
+			RANKX(
+			    ALLSELECTED(DimVendedor[Vendedor]),
+			    [Ventas Netas Corregidas],
+			    ,
+			    DESC,
+			    DENSE
+			)
+		formatString: 0
+		lineageTag: 98950b16-d895-4849-9827-ea5aec561598
+
+	measure 'Participacion Vendedor %' =
+			
+			DIVIDE(
+			    [Ventas Netas Corregidas],
+			    CALCULATE(
+			        [Ventas Netas Corregidas],
+			        REMOVEFILTERS(DimVendedor)
+			    ),
+			    0
+			)
+		formatString: 0.00 %;-0.00 %;0.00 %
+		lineageTag: affca629-b73a-4235-a966-731acbfcf5b3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":false}
+
+	measure Medida
+		lineageTag: 6774c319-e324-43d5-8c05-ac830da5f155
+
+		annotation 43dbc3e8-3a1c-4b6f-9923-b49ff7d6691c = True
+
+	measure 'Vendedores Activos' =
+			
+			COUNTROWS(
+			    FILTER(
+			        VALUES(DimVendedor[IDVendedor]),
+			        [Ventas Netas Corregidas] > 0
+			    )
+			)
+		formatString: 0
+		lineageTag: 9dd938ef-a6a0-4113-9bad-6db4dd03e798
+
+	column IDVenta
+		dataType: string
+		lineageTag: 25c07b54-7ada-4051-b6ab-2fb4fde1f746
+		summarizeBy: none
+		sourceColumn: IDVenta
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 38f7fcb9-20d3-4331-9cd7-c646b61d2edf
+		summarizeBy: none
+		sourceColumn: Fecha
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column IDProducto
+		dataType: string
+		lineageTag: 9c92ed94-ea8d-46e1-9ce2-553a54b4bc4e
+		summarizeBy: none
+		sourceColumn: IDProducto
+
+		annotation SummarizationSetBy = Automatic
+
+	column IDCliente
+		dataType: string
+		lineageTag: 6ba849ce-9344-4fbc-8096-a3fbe6ca90a6
+		summarizeBy: none
+		sourceColumn: IDCliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column IDVendedor
+		dataType: string
+		lineageTag: bc1d0956-7453-4ff7-92ed-79bda03f7d44
+		summarizeBy: none
+		sourceColumn: IDVendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cantidad
+		dataType: int64
+		lineageTag: ac69ca70-aad3-4d41-bb99-b45ff997be46
+		summarizeBy: sum
+		sourceColumn: Cantidad
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PrecioUnitarioCLP
+		dataType: double
+		lineageTag: 53915ff3-ca46-4442-9dcc-73dd5a172fcd
+		summarizeBy: sum
+		sourceColumn: PrecioUnitarioCLP
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column DescuentoPct
+		dataType: double
+		lineageTag: ff3d4235-2dee-4afd-91e7-110ef5fa312e
+		summarizeBy: sum
+		sourceColumn: DescuentoPct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EsDevolucion
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: caba5ba1-01f1-4110-b579-85417ee1ea22
+		summarizeBy: none
+		sourceColumn: EsDevolucion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Canal
+		dataType: string
+		lineageTag: bc40e1c9-04ec-4edf-9def-eb96f2658fae
+		summarizeBy: none
+		sourceColumn: Canal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado
+		dataType: string
+		lineageTag: f3c1bf96-31c2-4e87-8da8-69c17d9ba2d0
+		summarizeBy: none
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactVentas = m
+		mode: import
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents(DataFolder & "\retail_sales_intelligence_distribuidora_san_pedro.xlsx"), null, true),
+				    FactVentas_Sheet = Origen{[Item="FactVentas",Kind="Sheet"]}[Data],
+				    #"Encabezados promovidos" = Table.PromoteHeaders(FactVentas_Sheet, [PromoteAllScalars=true]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos",{{"IDVenta", type text}, {"Fecha", type date}, {"IDProducto", type text}, {"IDCliente", type text}, {"IDVendedor", type text}, {"Cantidad", type number}, {"PrecioUnitarioCLP", type number}, {"DescuentoPct", type number}, {"EsDevolucion", type logical}, {"Canal", type text}, {"Estado", type text}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

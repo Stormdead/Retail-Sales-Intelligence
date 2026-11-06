@@ -1,0 +1,9 @@
+**/.pbi/
+**/bin/
+**/obj/
+*.pbix
+*.pbit
+*.zip
+~$*
+.DS_Store
+Thumbs.db

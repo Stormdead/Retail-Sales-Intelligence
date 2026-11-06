@@ -1,0 +1,15 @@
+{
+  "revision": "v2",
+  "previous_desktop_open": "FAILED: InvalidLineType, FactVentas line 98",
+  "reported_desktop_version": "2.159.1231.0 (October 2026)",
+  "fix": "Multiline expression starts on line after declaration with proper indentation",
+  "measure_tokens_unchanged": true,
+  "inline_measure_continuation_check": {
+    "checked": 6,
+    "issues": []
+  },
+  "json_parsed": 54,
+  "desktop_open_v2": "PENDING",
+  "dax_compilation": "PENDING",
+  "excel_paths": "Five queries target bundled v2 Data folder"
+}

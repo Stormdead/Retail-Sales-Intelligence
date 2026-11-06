@@ -1,0 +1,17 @@
+table Medidas
+	lineageTag: 8ebc5bbc-d086-4714-b1ce-adf4a8f04136
+
+	column Value
+		lineageTag: 663f8fe1-d14f-4337-ba1a-9eb41bde3a0f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Medidas = calculated
+		mode: import
+		source = { "Medidas"}
+
+	annotation PBI_Id = b34a9a9498b9401db0d84e9f8bdc6308
+

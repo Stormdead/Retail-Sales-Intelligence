@@ -1,0 +1,106 @@
+table DimFecha
+	lineageTag: a0a0df07-13d7-4163-b3f7-fa522f0a6546
+
+	column Fecha
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ef198015-8fa3-49e1-acf1-40aa48e8db08
+		summarizeBy: none
+		sourceColumn: Fecha
+
+		variation Variation
+			isDefault
+			relationship: 5deae0aa-0b0e-4274-b077-54399b02de22
+			defaultHierarchy: LocalDateTable_7f9d63ec-a8d7-412b-8643-1996248b923b.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Anio
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c90e3f5-ee27-4b6d-b0e7-76878951d871
+		summarizeBy: sum
+		sourceColumn: Anio
+
+		annotation SummarizationSetBy = Automatic
+
+	column MesNumero
+		dataType: int64
+		formatString: 0
+		lineageTag: a55b8fa6-b854-4f23-8f61-d6e7f79ebdfc
+		summarizeBy: sum
+		sourceColumn: MesNumero
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mes
+		dataType: string
+		lineageTag: 9a969285-61ce-4b8f-a9bf-8c42706a9a47
+		summarizeBy: none
+		sourceColumn: Mes
+		sortByColumn: MesNumero
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Trimestre
+		dataType: string
+		lineageTag: f90524d8-cf62-444d-b998-c81815b95778
+		summarizeBy: none
+		sourceColumn: Trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dia
+		dataType: int64
+		formatString: 0
+		lineageTag: 4290dd0b-3519-4c53-bc0a-508d8afd47f4
+		summarizeBy: sum
+		sourceColumn: Dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiaSemanaNumero
+		dataType: int64
+		formatString: 0
+		lineageTag: 8a995dbf-c3b9-4ab6-8c50-f4156bce4bc6
+		summarizeBy: sum
+		sourceColumn: DiaSemanaNumero
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiaSemana
+		dataType: string
+		lineageTag: 63567d61-dd2f-4520-bb35-94381d69f42f
+		summarizeBy: none
+		sourceColumn: DiaSemana
+
+		annotation SummarizationSetBy = Automatic
+
+	column EsFinDeSemana
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a3476202-1645-490c-9be3-bf13b72d8a68
+		summarizeBy: none
+		sourceColumn: EsFinDeSemana
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimFecha = m
+		mode: import
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents(DataFolder & "\retail_sales_intelligence_distribuidora_san_pedro.xlsx"), null, true),
+				    DimFecha_Sheet = Origen{[Item="DimFecha",Kind="Sheet"]}[Data],
+				    #"Encabezados promovidos" = Table.PromoteHeaders(DimFecha_Sheet, [PromoteAllScalars=true]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos",{{"Fecha", type date}, {"Anio", Int64.Type}, {"MesNumero", Int64.Type}, {"Mes", type text}, {"Trimestre", type text}, {"Dia", Int64.Type}, {"DiaSemanaNumero", Int64.Type}, {"DiaSemana", type text}, {"EsFinDeSemana", type logical}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

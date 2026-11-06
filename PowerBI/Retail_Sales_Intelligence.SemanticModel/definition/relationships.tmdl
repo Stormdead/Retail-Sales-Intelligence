@@ -1,0 +1,26 @@
+relationship 5deae0aa-0b0e-4274-b077-54399b02de22
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimFecha.Fecha
+	toColumn: LocalDateTable_7f9d63ec-a8d7-412b-8643-1996248b923b.Date
+
+relationship 1f1d29b7-a213-4428-bd7f-380641d25ab5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimCliente.FechaAlta
+	toColumn: LocalDateTable_37aa7ca7-64a6-4744-8aa9-7b028defdf88.Date
+
+relationship AutoDetected_86551ff9-e221-4e4b-92ac-18b4a16c02b4
+	fromColumn: FactVentas.IDProducto
+	toColumn: DimProducto.IDProducto
+
+relationship AutoDetected_a6abe746-a56e-4cfd-932e-a2da322ce26d
+	fromColumn: FactVentas.IDCliente
+	toColumn: DimCliente.IDCliente
+
+relationship AutoDetected_33376161-5e4e-45e0-8f21-2b0a27d3e534
+	fromColumn: FactVentas.IDVendedor
+	toColumn: DimVendedor.IDVendedor
+
+relationship 8c6060c6-7769-c57e-4a83-f7d9434d39ad
+	fromColumn: FactVentas.Fecha
+	toColumn: DimFecha.Fecha
+

@@ -1,0 +1,80 @@
+table DimCliente
+	lineageTag: 5059d430-7b01-4b6e-a76e-d71b6169f3c0
+
+	measure 'Prueba Filas' =
+			
+			COUNTROWS(FactVentas)
+		formatString: 0
+		lineageTag: 219e87d4-5547-4ade-8e78-02aa413ca8ab
+
+	column IDCliente
+		dataType: string
+		lineageTag: 9ac3c34a-2f1d-4c00-8fbd-7bbd1e8a8b6a
+		summarizeBy: none
+		sourceColumn: IDCliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cliente
+		dataType: string
+		lineageTag: a8c66316-1d03-4d84-ae4c-78e1e2b11af7
+		summarizeBy: none
+		sourceColumn: Cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column TipoCliente
+		dataType: string
+		lineageTag: aeff92a8-a6a8-43a1-98e5-b73a80e6ecdc
+		summarizeBy: none
+		sourceColumn: TipoCliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column Comuna
+		dataType: string
+		lineageTag: 04b93f33-97dc-48ee-9038-f971c81c926e
+		summarizeBy: none
+		sourceColumn: Comuna
+
+		annotation SummarizationSetBy = Automatic
+
+	column Segmento
+		dataType: string
+		lineageTag: 9fd449ce-0c72-40ef-a19a-82511bd4a030
+		summarizeBy: none
+		sourceColumn: Segmento
+
+		annotation SummarizationSetBy = Automatic
+
+	column FechaAlta
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: ce80d080-7419-41c3-9a43-85184564786f
+		summarizeBy: none
+		sourceColumn: FechaAlta
+
+		variation Variation
+			isDefault
+			relationship: 1f1d29b7-a213-4428-bd7f-380641d25ab5
+			defaultHierarchy: LocalDateTable_37aa7ca7-64a6-4744-8aa9-7b028defdf88.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition DimCliente = m
+		mode: import
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents(DataFolder & "\retail_sales_intelligence_distribuidora_san_pedro.xlsx"), null, true),
+				    DimCliente_Sheet = Origen{[Item="DimCliente",Kind="Sheet"]}[Data],
+				    #"Encabezados promovidos" = Table.PromoteHeaders(DimCliente_Sheet, [PromoteAllScalars=true]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos",{{"IDCliente", type text}, {"Cliente", type text}, {"TipoCliente", type text}, {"Comuna", type text}, {"Segmento", type text}, {"FechaAlta", type date}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

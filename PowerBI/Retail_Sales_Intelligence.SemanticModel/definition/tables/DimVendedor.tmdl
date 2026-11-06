@@ -1,0 +1,43 @@
+table DimVendedor
+	lineageTag: 2a11155d-0649-481f-8b82-0858dd669f28
+
+	column IDVendedor
+		dataType: string
+		lineageTag: 95995245-98c1-4395-8ad6-044c2c5b1e39
+		summarizeBy: none
+		sourceColumn: IDVendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Vendedor
+		dataType: string
+		lineageTag: 6d26286f-0d5a-4204-a8bc-c930217e5cb1
+		summarizeBy: none
+		sourceColumn: Vendedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Equipo
+		dataType: string
+		lineageTag: bec1a3e8-e772-4a3d-911b-699e21a0a708
+		summarizeBy: none
+		sourceColumn: Equipo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimVendedor = m
+		mode: import
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents(DataFolder & "\retail_sales_intelligence_distribuidora_san_pedro.xlsx"), null, true),
+				    DimVendedor_Sheet = Origen{[Item="DimVendedor",Kind="Sheet"]}[Data],
+				    #"Tipo cambiado" = Table.TransformColumnTypes(DimVendedor_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}}),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Tipo cambiado",{{"Column1", "IDVendedor"}, {"Column2", "Vendedor"}, {"Column3", "Equipo"}}),
+				    #"Filas superiores quitadas" = Table.Skip(#"Columnas con nombre cambiado",1)
+				in
+				    #"Filas superiores quitadas"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

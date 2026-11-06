@@ -1,0 +1,134 @@
+{
+  "errors": [],
+  "checks": {
+    "json_parse_count": 52,
+    "visual_field_references": 99,
+    "pages": 4,
+    "visuals": 34,
+    "relationship_endpoints": 12,
+    "model_tables": 9,
+    "measure_ids_preserved": true,
+    "source_data_unchanged": true,
+    "original_pbix_sha256": "3fe483912518c26bd565c66485ca09598337498907d71b7656b9d1b1415b99b7"
+  },
+  "schemas": [
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+      "status": "passed",
+      "files": 2,
+      "issues": []
+    },
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+      "status": "passed",
+      "files": 4,
+      "issues": []
+    },
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
+      "status": "passed",
+      "files": 1,
+      "issues": []
+    },
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+      "status": "passed",
+      "files": 1,
+      "issues": []
+    },
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/versionMetadata/1.0.0/schema.json",
+      "status": "passed",
+      "files": 1,
+      "issues": []
+    },
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+      "status": "unavailable",
+      "reason": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/item/report/definitionProperties/2.0.0/schema.json",
+      "status": "passed",
+      "files": 1,
+      "issues": []
+    },
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/item/report/localSettings/1.0.0/schema.json",
+      "status": "passed",
+      "files": 1,
+      "issues": []
+    },
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/item/semanticModel/definitionProperties/1.0.0/schema.json",
+      "status": "passed",
+      "files": 1,
+      "issues": []
+    },
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/item/semanticModel/editorSettings/1.0.0/schema.json",
+      "status": "passed",
+      "files": 1,
+      "issues": []
+    },
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/item/semanticModel/localSettings/1.2.0/schema.json",
+      "status": "unavailable",
+      "reason": "HTTP Error 404: Not Found"
+    },
+    {
+      "url": "https://developer.microsoft.com/json-schemas/fabric/pbip/pbipProperties/1.0.0/schema.json",
+      "status": "passed",
+      "files": 1,
+      "issues": []
+    }
+  ],
+  "changed_files": [
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\pages.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\page.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\visuals\\088d64185e40d1690251\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\visuals\\0d90116dd748331d10d0\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\visuals\\284962f1d12985207d9c\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\visuals\\55f826529a0ddb21d93e\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\visuals\\616b5b318da2be394d12\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\visuals\\afe8d29248528a95e3ad\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\visuals\\b14850eab5e66256bd29\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\visuals\\bc6b7573dd6a2251eeb4\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\visuals\\bfe90074318a59adc930\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\visuals\\d0dd57e3cedee6e00b39\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\65116d26b881ae4ab3d0\\visuals\\f49426b8a25db745b7c1\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\c922314f059095571710\\page.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\c922314f059095571710\\visuals\\07f80f41c72703580506\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\c922314f059095571710\\visuals\\08fe0a71d70ede935d28\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\c922314f059095571710\\visuals\\447ed7f72078c0739c60\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\c922314f059095571710\\visuals\\46d3f7ad0c943097c3c2\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\c922314f059095571710\\visuals\\859c4c4e15089738e580\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\c922314f059095571710\\visuals\\85cba60e37e786141ab2\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\c922314f059095571710\\visuals\\b8179e188a2e8025230e\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\c922314f059095571710\\visuals\\eb723c8850026cd12202\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\e926aa118555698dd0b0\\page.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\e926aa118555698dd0b0\\visuals\\41cb540357c805a865b3\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\e926aa118555698dd0b0\\visuals\\4cf83e3ed5577a3a14ab\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\e926aa118555698dd0b0\\visuals\\5458b3562151330c7b11\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\e926aa118555698dd0b0\\visuals\\652e5591a0a2e3bc7e80\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\e926aa118555698dd0b0\\visuals\\6ff047129055052ee91e\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\e926aa118555698dd0b0\\visuals\\7a59bb13b56029d40270\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\e926aa118555698dd0b0\\visuals\\8c18e1d0d0d210048de7\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\feacde4f1400b87b58ae\\page.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\feacde4f1400b87b58ae\\visuals\\18a1fd847ce10cbec301\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\feacde4f1400b87b58ae\\visuals\\2297a5ff4aad270ec21a\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\feacde4f1400b87b58ae\\visuals\\50edd8235370e92eea65\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\feacde4f1400b87b58ae\\visuals\\58fbaf6e947c8c6b7505\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\feacde4f1400b87b58ae\\visuals\\67c8708cbe0340ad5b69\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\feacde4f1400b87b58ae\\visuals\\8beaabd361c3224c0c79\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\feacde4f1400b87b58ae\\visuals\\a2c69ded481323070e46\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.Report\\definition\\pages\\feacde4f1400b87b58ae\\visuals\\d0bdb74032bb2b2c289e\\visual.json",
+    "PowerBI\\Retail_Sales_Intelligence.SemanticModel\\definition\\tables\\DimCliente.tmdl",
+    "PowerBI\\Retail_Sales_Intelligence.SemanticModel\\definition\\tables\\DimFecha.tmdl",
+    "PowerBI\\Retail_Sales_Intelligence.SemanticModel\\definition\\tables\\DimProducto.tmdl",
+    "PowerBI\\Retail_Sales_Intelligence.SemanticModel\\definition\\tables\\DimVendedor.tmdl",
+    "PowerBI\\Retail_Sales_Intelligence.SemanticModel\\definition\\tables\\FactVentas.tmdl"
+  ],
+  "desktop_tested": false,
+  "tmdl_validation": "Static references and lineage only; no Microsoft TMDL deserialization or DAX compilation available."
+}

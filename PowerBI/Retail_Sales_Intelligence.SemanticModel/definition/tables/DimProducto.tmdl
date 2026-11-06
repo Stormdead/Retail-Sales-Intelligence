@@ -1,0 +1,77 @@
+table DimProducto
+	lineageTag: 0c2710d3-4f83-4603-aa27-508a239da2ee
+
+	column IDProducto
+		dataType: string
+		lineageTag: 65fc4bb7-3da6-4bd0-b221-e8b5712a5a8e
+		summarizeBy: none
+		sourceColumn: IDProducto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Producto
+		dataType: string
+		lineageTag: 8e69c085-1aad-4d92-a26c-95f0af5f61ba
+		summarizeBy: none
+		sourceColumn: Producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column Categoria
+		dataType: string
+		lineageTag: 857bfee3-78fb-4d55-b1e7-52de8eb66c86
+		summarizeBy: none
+		sourceColumn: Categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marca
+		dataType: string
+		lineageTag: 78f5ad1f-d296-4998-96b4-20d457aef230
+		summarizeBy: none
+		sourceColumn: Marca
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrecioListaCLP
+		dataType: int64
+		formatString: 0
+		lineageTag: bb0ba53a-8b18-4ed6-8f10-ccd30d313ac8
+		summarizeBy: none
+		sourceColumn: PrecioListaCLP
+
+		annotation SummarizationSetBy = Automatic
+
+	column CostoUnitarioCLP
+		dataType: int64
+		formatString: 0
+		lineageTag: 26e41344-2e7d-4c3b-ba6d-39f5cde6945a
+		summarizeBy: none
+		sourceColumn: CostoUnitarioCLP
+
+		annotation SummarizationSetBy = Automatic
+
+	column StockMinimoUnidades
+		dataType: int64
+		formatString: 0
+		lineageTag: 4eec24cd-9f77-4c37-a0fe-821e81191e00
+		summarizeBy: none
+		sourceColumn: StockMinimoUnidades
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimProducto = m
+		mode: import
+		source =
+				let
+				    Origen = Excel.Workbook(File.Contents(DataFolder & "\retail_sales_intelligence_distribuidora_san_pedro.xlsx"), null, true),
+				    DimProducto_Sheet = Origen{[Item="DimProducto",Kind="Sheet"]}[Data],
+				    #"Encabezados promovidos" = Table.PromoteHeaders(DimProducto_Sheet, [PromoteAllScalars=true]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos",{{"IDProducto", type text}, {"Producto", type text}, {"Categoria", type text}, {"Marca", type text}, {"PrecioListaCLP", Int64.Type}, {"CostoUnitarioCLP", Int64.Type}, {"StockMinimoUnidades", Int64.Type}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

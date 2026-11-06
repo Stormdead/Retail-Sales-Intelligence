@@ -1,0 +1,12 @@
+{
+  "rows": 3000,
+  "confirmed": 2961,
+  "cancelled": 39,
+  "sales_before_discounts": "322985909",
+  "discounts": "8809824.68",
+  "net_sales": "314176084.32",
+  "cost": "222758420",
+  "profit": "91417664.32",
+  "margin": "0.2909758854429152432184084457",
+  "all_states_before_discounts": "327635194"
+}
